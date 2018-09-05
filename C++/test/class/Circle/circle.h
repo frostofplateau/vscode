@@ -1,4 +1,4 @@
-#include<iostream>
+#ifdef __cplusplus
 class Circle
 {
 public:
@@ -10,3 +10,4 @@ public:
 private:
     double radius;
 };
+#endif
