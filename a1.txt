@@ -1,17 +1,22 @@
 diff --git "a/C++/test/\351\200\222\345\275\222/jiecheng.cpp" "b/C++/test/\351\200\222\345\275\222/jiecheng.cpp"
-index bfe1e0c..5dafe50 100644
+index bfe1e0c..f949349 100644
 --- "a/C++/test/\351\200\222\345\275\222/jiecheng.cpp"
 +++ "b/C++/test/\351\200\222\345\275\222/jiecheng.cpp"
-@@ -1,6 +1,7 @@
+@@ -1,14 +1,26 @@
  #include<iostream>
++#include<cstring>
  using namespace std;
 -int resursive(int);
 +int resursive(int);//阶乘
 +int fib(int);//斐波那契数列
  int main()
  {
++    // char a[] = "sdasdfasdf";
++    // cout << strlen(a);
++    //这种形式也是正确的。应该是不太清楚strlen这个函数的原因，才有点怀疑的吧。
++
      cout << "Enter the number:";
-@@ -8,7 +9,13 @@ int main()
+     int number;
      cin >> number;
      int result = resursive(number);
      cout << "the result is " << result << endl;
@@ -26,7 +31,7 @@ index bfe1e0c..5dafe50 100644
  }
  
  int resursive(int n)
-@@ -20,4 +27,13 @@ int resursive(int n)
+@@ -20,4 +32,13 @@ int resursive(int n)
      else
          return(n * (resursive(n - 1)));
  
@@ -42,5 +47,5 @@ index bfe1e0c..5dafe50 100644
  }
 \ No newline at end of file
 diff --git "a/C++/test/\351\200\222\345\275\222/jiecheng.exe" "b/C++/test/\351\200\222\345\275\222/jiecheng.exe"
-index 22243bc..8ca48ee 100644
+index 22243bc..32e2879 100644
 Binary files "a/C++/test/\351\200\222\345\275\222/jiecheng.exe" and "b/C++/test/\351\200\222\345\275\222/jiecheng.exe" differ
