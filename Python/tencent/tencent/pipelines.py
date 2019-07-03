@@ -7,16 +7,16 @@
 import json
 
 
-class DemoPipeline(object):
+class TencentPipeline(object):
     def __init__(self):
-        self.filename = open("teach.json", 'w')
+        self.filename = open("positon.json", 'w')
 
-        
+
     def process_item(self, item, spider):
-        jsontext = json.dumps(dict(item), ensure_ascii=False) + '\n'
-        self.filename.write(jsontext)
+        text = json.dumps(dict(item), ensure_ascii=False) + '\n'
+        self.filename.write(text)
         return item
 
 
-    def close_spider(self, spider):
+    def stop_scripy(self):
         self.filename.close()

@@ -8,14 +8,17 @@ def loadPage(url):
     """
     # http://www.mm131.com/xinggan/
     # 获取首页URL //div[@class="main"]//dd/a/@href
-    ag_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"}    
-    request = urllib.request.Request(url, headers=ag_headers)
+    picreferer = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko",
+            'Referer': 'http://www.mm131.com'
+    }    
+    request = urllib.request.Request(url, headers=picreferer)
     response = urllib.request.urlopen(request)
     html = response.read()
     content = etree.HTML(html)
     picLink_list = content.xpath('//div[@class="main"]//dd/a/@href')
     new_picLink_list = []
-    for num in range(0,20):
+    for num in range(0,len(picLink_list)):
         new_picLink_list.append(picLink_list[num])
     for link in new_picLink_list:
         loadLink(link)
@@ -25,27 +28,35 @@ def loadLink(url):
     """
     获取图片链接
     """
-    ag_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"}
-    request = urllib.request.Request(url, headers=ag_headers)
+    picreferer = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko",
+            'Referer': 'http://www.mm131.com'
+    }
+    request = urllib.request.Request(url, headers=picreferer)
     response = urllib.request.urlopen(request)
     html = response.read()
     content = etree.HTML(html)
-    picLink_list = content.xpath('//div[@class="content-page"]//span[@class="page-ch"]/text()')[0]
-    totalPages = int(picLink_list[1:3])
-    print(totalPages)
-    fullurl_list = [url]
-    for num in range(2, totalPages+1):
-        fullurl = url[0:-5] + "_" + str(num) + ".html"
-        fullurl_list.append(fullurl)
-    for item in fullurl_list:
-        # print("正在下载图片" + item)
-        downloadPic(item)
+    picLink_list = content.xpath('//div[@class="content-page"]//span[@class="page-ch"]/text()')
+    if picLink_list != []:
+        picLink_list = picLink_list[0]
+        totalPages = int(picLink_list[1:3])
+        print("this group total pictures:" + str(totalPages))
+        fullurl_list = [url]
+        for num in range(2, totalPages+1):
+            fullurl = url[0:-5] + "_" + str(num) + ".html"
+            fullurl_list.append(fullurl)
+        for item in fullurl_list:
+            # print("正在下载图片" + item)
+            downloadPic(item)
 
     
 def downloadPic(link):
     # print("xiazai:"+link)
-    ag_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"}
-    request = urllib.request.Request(link, headers=ag_headers)
+    picreferer = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko",
+            'Referer': 'http://www.mm131.com'
+    }
+    request = urllib.request.Request(link, headers=picreferer)
     response = urllib.request.urlopen(request)
     html = response.read()
     content = etree.HTML(html)
@@ -55,7 +66,7 @@ def downloadPic(link):
     filename = content.xpath('//div[@class="content"]/h5/text()')[0]
     fullName  = filename + ".jpg"
 
-    request = urllib.request.Request(picLink, headers=ag_headers)
+    request = urllib.request.Request(picLink, headers=picreferer)
     response = urllib.request.urlopen(request)
     image = response.read()
     with open(fullName, 'wb',) as f:
@@ -82,8 +93,8 @@ if __name__ == "__main__":
     url = "http://www.mm131.com/xinggan/"
     loadPage(url)
 #     spiderProcess(url)
-    for i in range(2, 188):
+    for i in range(2, 189):
         fullurl = url + "list_6_" + str(i) + ".html"
         # spiderProcess(fullurl)
-        loadPage(url)
+        loadPage(fullurl)
     print("thanks")

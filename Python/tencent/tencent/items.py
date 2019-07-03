@@ -8,10 +8,12 @@
 import scrapy
 
 
-class DemoItem(scrapy.Item):
+class TencentItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    name = scrapy.Field()
-    title = scrapy.Field()
-    info = scrapy.Field()
+    positionName = scrapy.Field()
+    positionType = scrapy.Field()
+    # num = scrapy.Field()
+    # workspace = scrapy.Field()
+    # time = scrapy.Field()
 
