@@ -7,7 +7,7 @@ void maxValue(T list[], int arraySize)
     {
         int maxValueIndex = 0;
         T currentMax = list[0];
-        for (int j = 1; j <= i; j++)
+                                                                                                                                                                                                                                                                                                                                                              for (int j = 1; j <= i; j++)
         {
             if(currentMax < list[j])
             {
