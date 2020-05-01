@@ -1,0 +1,9 @@
+步骤：
+1、optionalfeatures进入Windows功能，打开FTP和iis
+2、进入IIS，搭建环境
+
+本机能访问，但是其他的机器不能访问的原因是：被防火墙给阻止了
+解决方案：
+    入策略里新建一个端口
+    允许应用通过防火墙添加允许其他应用（c:/windows/system32/svchost.exte）windows服务主进程
+    

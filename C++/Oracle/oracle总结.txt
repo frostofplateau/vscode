@@ -1,0 +1,121 @@
+1、在sqlplus中清屏的命令是：host cls;
+2、关于null的几个要点：
+    null与表达式计算结果为null，可以使用滤空函数nvl(a,b)
+    滤空函数nvl(a,b)：
+        若a为空，则结果为b；反之结果为a
+    null不能在not in集合中
+    null不能使用=、！=、<>
+3、select distinct deptno from dept;//去除重复行
+4、在sqlplus中命令输错了，可以通过ed调用编辑来修改
+5、sql是和数据库操作，sqlplus是和本地操作
+6、伪表和伪列(dual)是原本就存在的表/列，它是不依赖某个具体的表
+7、？ topic查看sqlplus指令
+8、字符串用单引号，字符区分大小写
+9、日期格式：
+      你的格式和别人的格式不一样，这个时候需要怎么办呢？
+          to_date('1980-12-12','yyyy-mm-dd')
+          to_char(hiredate,'yyyy-mm-dd')
+10、定义转义字符：escape ‘/’
+11、排序：desc/asc 只能作用于它前一个字段
+12、条件表达式：
+    法一：select sal “涨前薪水”,case job when 'Present' then sal+100
+                                  when 'xxx' then sal+50
+                                  when 'xxx' then sal+30
+                                  else sal+10
+                                  end "涨后薪水"
+    from dual;
+    法二：select sal "涨前薪水"，decode(job,'Present',sal+100,
+                                          'xxx',sal+30,
+                                          'xxx',sal+20,
+                                          sal+10) "涨后薪水"
+    from dual;
+13、分组函数有滤空的功能
+14、分组函数有：max、min、sum、count、avg
+15、在select中出现的除聚合函数的字段（列）必须在group by中出现
+    where后面不能使用分组函数
+    having的作用是对分组进行过滤
+    where和having都能用的时候优先使用where
+
+16、多表查询
+    基础：笛卡尔全集
+    行数=表1*表2
+    列数=表1+表2
+    等值连接：条件中含“=”
+    不等值连接：条件中含不等号
+    外连接
+    自连接
+
+17、子查询
+    eg. 最低薪水大于30号部门的最低薪水及其部门
+    select min(sal),deptno from emp gruoup by deptno having min(sal) > (select min(sal) from emp where dept = 30);
+
+18、不可以在主查询group by 后面放置子查询
+19、单行子查询只能使用单行操作符
+    多行子查询只能使用多行操作符
+    多行操作符有in,any,all
+
+20、集合运算
+union、union all、intersect、minus
+
+21、报表处理时：多个集合必须列数相同且类型一致
+处理技巧：break on deptno skip 2;
+返回正常格式：break on null；
+
+22、&的作用：输入
+
+update dept set deptno = 10,dname = 'abc' where loc='xxx';
+
+23、事务
+特点：要么一起成功、要么一起失败
+commit/rollback
+事务开始的标志
+事务结束的标志
+    提交结束：显式提交、隐式提交
+    回滚结束：显式、rollback、隐式
+事务特性：原子性、一致性、隔离性、持久性
+保存点：savepoint aaa;
+       rollback savepoint aaa;
+
+24、delete与truncate的区别
+
+25、创建表有两个前提：表空间和权限
+create table t1 ([columns varchar2()]);
+create table t2 as select from t1 where 1=2;
+26、修改表
+    alter table t1 add CNAME varchar2(20);
+    alter table t1 modify CNAME varchar2(33);
+    alter table t1 rename column CNAME to dname;
+    alter table t1 drop column dname;
+
+27、重命名表
+    rename t1 to t3;
+28、查看回收站
+    show recyclebin;
+29、闪回表
+    flashback table t2 to before drop;
+    不经过回收站删除
+    drop table t3 purge;
+    purge recyclebin;
+30、删除表
+    drop table t2;
+31、表的约束
+    主键
+    外键
+    非空
+    检查
+    唯一性
+    create table student(
+        id number(4) constraint student_PK primary key,
+        sanme varchar2(20) not null,
+        sex varchar2(2) check(sex in ('男','女'))，
+        deptno number(2) reference dept(deptno) on delete cascade
+    );
+
+32、级联删除
+    先删除子表再删除主表
+33、数据库对象
+    表：数据集合，由行列组成
+    视图：从表中抽出的逻辑上相关的数据集合
+    索引：提高查询效率
+    序列：提供有规律的数值
+    同义词：给对象起别名
