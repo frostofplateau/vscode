@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <fstream>
-#import "work.hpp"
+#include "work.hpp"
 #define FILENAME "empFile.txt"
 using namespace std;
 
